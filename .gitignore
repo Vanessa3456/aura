@@ -1,0 +1,14 @@
+# Environments
+.env
+venv/
+env/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Database
+db.sqlite3
+
+# VS Code settings
+.vscode/
