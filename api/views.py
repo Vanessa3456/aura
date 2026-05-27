@@ -118,8 +118,7 @@ class AuraStylistView(APIView):
         gemini_contents.append(f"\nUser:{user_msg}\nAura:")
         
         try:
-            # SERIOUSLY: Move this key to settings.py!
-            client = genai.Client(api_key="AIzaSyDe4ULK61oQegyUumOHYhpxJ-zrpsaef_I")
+            client = genai.Client(api_key=settings.GEMINI_API_KEY)
             response = client.models.generate_content(
                 model='gemini-2.5-flash',
                 contents=gemini_contents
@@ -130,7 +129,6 @@ class AuraStylistView(APIView):
             error_msg = str(e)
             print(f"CRITICAL AI ERROR: {error_msg}")
             
-            # FIXED: Changed 429 to "429" (String)
             if "503" in error_msg or "UNAVAILABLE" in error_msg or "429" in error_msg:
                 return Response(
                     {"reply": "Whoa, I'm getting way too many styling requests right now! Give me a few minutes to catch my breath and ask me again. In the meantime, you can check your discover page for some nice inspos"},                  
