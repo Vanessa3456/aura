@@ -175,11 +175,13 @@ def upload_clothing(request):
         category=category,
         image=image_file
     )
+    
+    print("IMAGE URL GENERATED:", item.image.url)
 
     return Response({
         'message': 'Successfully added to Cloud Closet!',
         'id': item.id,
-        'image_url': item.image.url, 
+        'image_url': 'https:' + item.image.url if item.image.url.startswith('//') else item.image.url, 
         'category': item.category
     }, status=201)
 
@@ -218,7 +220,7 @@ def get_wardrobe(request):
     data=[
         {
             'id':item.id,
-            'imagePath':item.image.url,
+            'imagePath': 'https:' + item.image.url if item.image.url.startswith('//') else item.image.url,
             'category':item.category
         }
         for item in items
